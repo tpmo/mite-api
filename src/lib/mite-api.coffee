@@ -61,7 +61,12 @@ module.exports = (options) ->
 
         when 'POST'
           if response.statusCode == 201
-            body = JSON.parse body
+            responseBody = body
+            try
+              body = JSON.parse body
+            catch e
+              body = responseBody
+
             err = null
           else
             err = body
