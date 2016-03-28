@@ -100,7 +100,7 @@
     switch (url) {
       case 'https://account.mite.yo.lk/services.json':
         if (options.method === 'POST') {
-          response.statusCode = 401;
+          response.statusCode = 201;
           body = serviceMock;
         } else {
           response.statusCode = 200;
@@ -117,7 +117,7 @@
         break;
       case 'https://account.mite.yo.lk/customers.json':
         if (options.method === 'POST') {
-          response.statusCode = 401;
+          response.statusCode = 201;
           body = customerMock;
         } else {
           response.statusCode = 200;
@@ -134,7 +134,7 @@
         break;
       case 'https://account.mite.yo.lk/projects.json':
         if (options.method === 'POST') {
-          response.statusCode = 401;
+          response.statusCode = 201;
           body = projectMock;
         } else {
           response.statusCode = 200;
@@ -167,7 +167,7 @@
         break;
       case 'https://account.mite.yo.lk/time_entries.json':
         if (options.method === 'POST') {
-          response.statusCode = 401;
+          response.statusCode = 201;
           body = entryMock;
         } else {
           response.statusCode = 200;
