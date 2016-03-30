@@ -52,7 +52,7 @@ module.exports = (options) ->
       done err, null
     else
       switch response.req.method
-        when 'GET', 'PUT', 'DELETE'
+        when 'GET', 'PUT', 'DELETE', 'PATCH'
           if response.statusCode == 200
             responseBody = body
             try
@@ -90,7 +90,7 @@ module.exports = (options) ->
       }
     }, args[1]
 
-    if _.indexOf ['POST', 'PUT', 'DELETE'], requestOptions.method != -1
+    if _.indexOf ['POST', 'PUT', 'DELETE', 'PATCH'], requestOptions.method != -1
       requestOptions.headers['Content-Type'] = 'application/json'
 
     if options.query == false
