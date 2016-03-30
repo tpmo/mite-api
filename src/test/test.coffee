@@ -454,3 +454,27 @@ describe 'API', ->
     it 'should be able to delete time entry', (done) ->
       mite.deleteTimeEntry 1, (err, entry) ->
         done()
+
+  describe 'Tracker', ->
+    mite = miteApi { account: 'account', apiKey: 'apikey', applicationName: 'applicationname', request: requestMock }
+
+    it 'should be able to get an active tracker', (done) ->
+      mite.getTracker (err, entry) ->
+        entry.tracker.tracking_time_entry.should.have.property 'minutes'
+        entry.tracker.tracking_time_entry.should.have.property 'since'
+        entry.tracker.tracking_time_entry.should.have.property 'id'
+        done()
+
+    it 'should be able to start tracker', (done) ->
+      mite.startTracker 1, (err, entry) ->
+        entry.tracker.tracking_time_entry.should.have.property 'minutes'
+        entry.tracker.tracking_time_entry.should.have.property 'since'
+        entry.tracker.tracking_time_entry.should.have.property 'id'
+        done()
+
+    it 'should be able to stop tracker', (done) ->
+      mite.stopTracker 1, (err, entry) ->
+        entry.tracker.stopped_time_entry.should.have.property 'minutes'
+        entry.tracker.stopped_time_entry.should.have.property 'id'
+        done()
+

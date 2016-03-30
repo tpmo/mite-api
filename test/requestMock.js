@@ -1,7 +1,7 @@
 (function() {
 
   module.exports = function(options, done) {
-    var accountMock, body, customerMock, entryMock, err, method, projectMock, response, serviceMock, url, userMock;
+    var accountMock, body, customerMock, entryMock, err, method, projectMock, response, serviceMock, stopTrackerMock, trackerMock, url, userMock;
     err = null;
     url = options.url;
     method = options.method || 'GET';
@@ -97,6 +97,23 @@
         updated_at: "2013-05-01T12:32:47+02:00"
       }
     };
+    trackerMock = {
+      tracker: {
+        tracking_time_entry: {
+          id: 1,
+          minutes: 247,
+          since: "2015-10-15T17:05:04+02:00"
+        }
+      }
+    };
+    stopTrackerMock = {
+      tracker: {
+        stopped_time_entry: {
+          id: 1,
+          minutes: 46
+        }
+      }
+    };
     switch (url) {
       case 'https://account.mite.yo.lk/services.json':
         if (options.method === 'POST') {
@@ -181,6 +198,19 @@
       case 'https://account.mite.yo.lk/myself.json':
         response.statusCode = 200;
         body = userMock;
+        break;
+      case 'https://account.mite.yo.lk/tracker.json':
+        response.statusCode = 200;
+        body = trackerMock;
+        break;
+      case 'https://account.mite.yo.lk/tracker/1.json':
+        if (options.method === 'DELETE') {
+          response.statusCode = 200;
+          body = stopTrackerMock;
+        } else if (options.method === 'PATCH') {
+          response.statusCode = 200;
+          body = trackerMock;
+        }
         break;
       case 'https://account.mite.yo.lk/account.json':
         response.statusCode = 200;

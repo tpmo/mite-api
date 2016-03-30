@@ -439,7 +439,7 @@
         });
       });
     });
-    return describe('TimeEntry', function() {
+    describe('TimeEntry', function() {
       var mite;
       mite = miteApi({
         account: 'account',
@@ -565,6 +565,38 @@
       });
       return it('should be able to delete time entry', function(done) {
         return mite.deleteTimeEntry(1, function(err, entry) {
+          return done();
+        });
+      });
+    });
+    return describe('Tracker', function() {
+      var mite;
+      mite = miteApi({
+        account: 'account',
+        apiKey: 'apikey',
+        applicationName: 'applicationname',
+        request: requestMock
+      });
+      it('should be able to get an active tracker', function(done) {
+        return mite.getTracker(function(err, entry) {
+          entry.tracker.tracking_time_entry.should.have.property('minutes');
+          entry.tracker.tracking_time_entry.should.have.property('since');
+          entry.tracker.tracking_time_entry.should.have.property('id');
+          return done();
+        });
+      });
+      it('should be able to start tracker', function(done) {
+        return mite.startTracker(1, function(err, entry) {
+          entry.tracker.tracking_time_entry.should.have.property('minutes');
+          entry.tracker.tracking_time_entry.should.have.property('since');
+          entry.tracker.tracking_time_entry.should.have.property('id');
+          return done();
+        });
+      });
+      return it('should be able to stop tracker', function(done) {
+        return mite.stopTracker(1, function(err, entry) {
+          entry.tracker.stopped_time_entry.should.have.property('minutes');
+          entry.tracker.stopped_time_entry.should.have.property('id');
           return done();
         });
       });

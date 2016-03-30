@@ -36,6 +36,9 @@ module.exports = (options) ->
       user: 'users/{id}'
       usersArchived: 'users/archived'
 
+      trackers: 'tracker'
+      tracker: 'tracker/{id}'
+
       timeEntries: 'time_entries'
       timeEntry: 'time_entries/{id}'
       daily: 'daily'
@@ -112,6 +115,22 @@ module.exports = (options) ->
   api.getMyself = (args..., done) ->
     apiUrl = api.getUrl 'myself', args[0]
     makeRequest apiUrl, done
+
+  api.getTracker = (done) ->
+    apiUrl = api.getUrl 'trackers'
+    makeRequest apiUrl, done
+
+  api.startTracker = (id, args..., done) ->
+    query = (args[0]) || {}
+    query.id = id
+    apiUrl = api.getUrl 'tracker', query
+    makeRequest apiUrl, { method: 'PATCH' }, done
+
+  api.stopTracker = (id, args..., done) ->
+    query = (args[0]) || {}
+    query.id = id
+    apiUrl = api.getUrl 'tracker', query
+    makeRequest apiUrl, { method: 'DELETE' }, done
 
   api.getTimeEntries = (args..., done)->
     apiUrl = api.getUrl 'timeEntries', args[0]
